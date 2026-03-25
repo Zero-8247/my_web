@@ -66,12 +66,20 @@ body::before{content:'';position:fixed;inset:0;z-index:0;
   background:linear-gradient(180deg,#b8ddf5 0%,#d4ecf9 25%,#e8f5fd 55%,#f4faff 100%);
   pointer-events:none}
 
-/* ── 云朵 ── */
-.clouds-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.c{position:absolute}
-@keyframes drift1{0%,100%{transform:translateX(0)}50%{transform:translateX(35px)}}
-@keyframes drift2{0%,100%{transform:translateX(0)}50%{transform:translateX(-28px)}}
-@keyframes drift3{0%,100%{transform:translateX(0)}50%{transform:translateX(20px)}}
+/* ── 云朵增强版 ── */
+.clouds-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.c { position: absolute; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.05)); }
+
+/* 核心：更真实的缓慢漂移，加入了一点点上下起伏的呼吸感 */
+@keyframes drift {
+  0% { transform: translateX(-10vw) translateY(0); }
+  50% { transform: translateX(50vw) translateY(-20px); }
+  100% { transform: translateX(110vw) translateY(0); }
+}
+
+/* 增加立体感：给 SVG 的椭圆增加多重填充色 */
+.c svg ellipse { transition: all 0.3s; }
+
 
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;
@@ -230,23 +238,20 @@ footer p{font-size:.82rem;color:var(--muted);line-height:2.2}
 
 <!-- 云朵背景 -->
 <div class="clouds-bg" aria-hidden="true">
-  <div class="c" style="top:4%;left:-1%;opacity:.6;animation:drift1 18s ease-in-out infinite">
-    <svg width="340" height="110" viewBox="0 0 340 110"><ellipse cx="170" cy="78" rx="148" ry="40" fill="white"/><ellipse cx="105" cy="60" rx="75" ry="48" fill="white"/><ellipse cx="215" cy="54" rx="85" ry="50" fill="white"/><ellipse cx="155" cy="44" rx="65" ry="42" fill="white"/></svg>
+  <div class="c" style="top:5%; animation: drift 80s linear infinite;">
+    <svg width="360" height="120" viewBox="0 0 360 120">
+      <ellipse cx="180" cy="85" rx="155" ry="35" fill="white"/>
+      <ellipse cx="110" cy="65" rx="85" ry="55" fill="white"/>
+      <ellipse cx="220" cy="55" rx="95" ry="65" fill="#fcfcfc"/> <ellipse cx="165" cy="45" rx="75" ry="45" fill="white"/>
+    </svg>
   </div>
-  <div class="c" style="top:3%;right:-2%;opacity:.55;animation:drift2 22s ease-in-out infinite">
-    <svg width="300" height="96" viewBox="0 0 300 96"><ellipse cx="150" cy="68" rx="128" ry="34" fill="white"/><ellipse cx="92" cy="52" rx="66" ry="42" fill="white"/><ellipse cx="188" cy="48" rx="76" ry="44" fill="white"/><ellipse cx="136" cy="38" rx="55" ry="36" fill="white"/></svg>
-  </div>
-  <div class="c" style="top:20%;left:8%;opacity:.38;animation:drift3 28s ease-in-out infinite">
-    <svg width="200" height="66" viewBox="0 0 200 66"><ellipse cx="100" cy="48" rx="86" ry="24" fill="white"/><ellipse cx="62" cy="36" rx="48" ry="32" fill="white"/><ellipse cx="130" cy="32" rx="54" ry="34" fill="white"/></svg>
-  </div>
-  <div class="c" style="top:32%;right:3%;opacity:.32;animation:drift1 32s ease-in-out infinite">
-    <svg width="160" height="54" viewBox="0 0 160 54"><ellipse cx="80" cy="40" rx="68" ry="20" fill="white"/><ellipse cx="50" cy="30" rx="38" ry="26" fill="white"/><ellipse cx="105" cy="26" rx="44" ry="28" fill="white"/></svg>
-  </div>
-  <div class="c" style="bottom:18%;left:4%;opacity:.42;animation:drift2 20s ease-in-out infinite">
-    <svg width="280" height="88" viewBox="0 0 280 88"><ellipse cx="140" cy="64" rx="120" ry="30" fill="white"/><ellipse cx="86" cy="48" rx="62" ry="40" fill="white"/><ellipse cx="178" cy="44" rx="70" ry="42" fill="white"/><ellipse cx="128" cy="34" rx="52" ry="34" fill="white"/></svg>
-  </div>
-  <div class="c" style="bottom:6%;right:6%;opacity:.38;animation:drift3 24s ease-in-out infinite">
-    <svg width="220" height="72" viewBox="0 0 220 72"><ellipse cx="110" cy="52" rx="94" ry="26" fill="white"/><ellipse cx="68" cy="40" rx="52" ry="34" fill="white"/><ellipse cx="144" cy="36" rx="60" ry="36" fill="white"/></svg>
+
+  <div class="c" style="top:25%; animation: drift 110s linear infinite -20s; opacity:0.5;">
+    <svg width="280" height="100" viewBox="0 0 280 100">
+      <ellipse cx="140" cy="75" rx="125" ry="30" fill="white"/>
+      <ellipse cx="85" cy="55" rx="70" ry="50" fill="#f9f9f9"/>
+      <ellipse cx="185" cy="50" rx="80" ry="50" fill="white"/>
+    </svg>
   </div>
 </div>
 
